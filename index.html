@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex Interativa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="pokedex-container">
+        <h1>Pokédex Dinâmica (1-50)</h1>
+
+        <div class="pokedex">
+            <div class="pokemon-list-container">
+                <h2>Lista de Pokémon</h2>
+                <ul id="pokemon-list">
+                    <li class="loading">A carregar lista...</li>
+                </ul>
+            </div>
+
+            <div class="pokemon-display">
+                <div id="pokemon-info" class="hidden">
+                    <h2 id="pokemon-name">Nome do Pokémon</h2>
+                    <img id="pokemon-image" src="" alt="Imagem do Pokémon">
+                    <div id="pokemon-stats">
+                        <h3>Stats Base:</h3>
+                        </div>
+                </div>
+                 <div id="select-prompt">
+                    Selecione um Pokémon da lista
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
