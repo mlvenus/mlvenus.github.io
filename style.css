@@ -151,14 +151,13 @@ body {
 }
 
 /* Informações do Pokémon no Display */
-/* --- UPDATED align-items --- */
 #pokemon-info {
     display: grid;
-    grid-template-columns: 0.8fr 1.5fr 0.8fr;
+    grid-template-columns: 0.8fr 1.5fr 0.8fr; /* Adjust column ratios if needed */
     gap: 20px;
     width: 100%;
     height: 100%;
-    align-items: stretch; /* Changed from center to stretch */
+    align-items: stretch; /* Grid items fill the row height */
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
@@ -172,12 +171,12 @@ body {
 .info-left {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Content still centered vertically */
+    justify-content: center;
     text-align: left;
-    height: 100%; /* Stretches due to grid */
-    max-height: 75vh;
-    overflow-y: auto;
-    padding-right: 10px;
+    height: 100%; /* Stretches due to grid align-items */
+    overflow-y: auto; /* Enable scroll if content overflows */
+    padding-right: 10px; /* Spacing for scrollbar */
+    max-height: calc(90vh - 150px); /* Example: Limit height relative to viewport minus header/footer space */
 }
 
 #pokemon-name {
@@ -222,36 +221,41 @@ body {
     font-size: 0.95em;
     line-height: 1.6;
     color: #bdc3c7;
-    overflow-y: auto;
-    padding-right: 5px;
+    /* Removed overflow-y: auto; managed by .info-left */
+    padding-right: 5px; /* Minor spacing */
 }
 
-/* Coluna Central (Imagem) */
+/* --- UPDATED --- Coluna Central (Imagem) */
 .info-center {
-    display: flex;
-    align-items: center; /* Center wrapper vertically within stretched cell */
-    justify-content: center;
-    height: 100%; /* Stretches due to grid */
+    display: flex; /* Use flex to easily center content */
+    align-items: center; /* Vertically center wrapper */
+    justify-content: center; /* Horizontally center wrapper */
+    height: 100%; /* Fill the stretched grid cell height */
+    overflow: hidden; /* Prevent image overflow if somehow aspect ratio forces it */
 }
 
+/* --- UPDATED --- Wrapper to allow image to grow */
 .pokemon-image-wrapper {
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 90%;
-    max-height: 75vh;
-    width: auto;
-    max-width: 100%;
+    width: 100%; /* Take full width of the column */
+    height: 100%; /* *** CHANGED: Take full height of the column *** */
+    /* Removed max-height: 75vh; let it fill the cell */
+    position: relative; /* Needed if you add pseudo-elements later */
 }
 
+/* --- UPDATED --- Image styles */
 #pokemon-image {
     display: block;
+    /* Make image fill the wrapper while maintaining aspect ratio */
     max-width: 100%;
     max-height: 100%;
-    width: auto;
-    height: auto;
+    width: auto;  /* Let height dictate width based on aspect ratio */
+    height: auto; /* Let width dictate height based on aspect ratio */
+    /* *** ADDED/EMPHASIZED: Use contain to fit entirely within the bounds *** */
     object-fit: contain;
+    /* Keep pixelated rendering for sprites */
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
@@ -259,18 +263,19 @@ body {
     transition: transform 0.4s ease;
 }
 #pokemon-image:hover {
-    transform: scale(1.1);
+    transform: scale(1.05); /* Slight scale on hover, adjust if needed */
 }
 
 
 /* Coluna Direita (Stats) */
 .info-right {
-     display: flex;
+    display: flex;
     flex-direction: column;
-    justify-content: center; /* Content still centered vertically */
-    height: 100%; /* Stretches due to grid */
-    max-height: 75vh;
-    overflow-y: auto;
+    justify-content: center;
+    height: 100%; /* Stretches due to grid align-items */
+    overflow-y: auto; /* Enable scroll if content overflows */
+    padding-right: 10px; /* Spacing for scrollbar */
+     max-height: calc(90vh - 150px); /* Example: Limit height relative to viewport minus header/footer space */
 }
 .info-right h3 {
     font-family: 'Orbitron', sans-serif;
@@ -278,6 +283,7 @@ body {
     text-align: center;
     margin-bottom: 15px;
     font-size: 1.2em;
+    flex-shrink: 0; /* Prevent title from shrinking */
 }
 
 .stats-grid {
@@ -286,7 +292,7 @@ body {
     gap: 10px 12px;
     align-items: center;
     width: 100%;
-    padding-right: 10px;
+    /* Removed padding-right: 10px; now handled by .info-right */
 }
 
 .stat-name {
@@ -407,16 +413,17 @@ body {
     .pokedex-header h1 { font-size: 1.5em; }
     #pokemon-name { font-size: 2em; }
     #pokemon-info {
-        grid-template-columns: 0.9fr 1.3fr 0.9fr;
+        /* Adjust grid column ratios for medium screens if needed */
+        grid-template-columns: 1fr 1.3fr 1fr; /* Example adjustment */
         gap: 15px;
     }
-    .pokemon-image-wrapper {
-        height: 85%;
-        max-height: 65vh;
+    /* Adjust max-heights for side columns on medium screens */
+    .info-left, .info-right {
+         max-height: calc(90vh - 130px); /* Adjust based on new header/footer size */
     }
-    .stats-grid { gap: 8px 10px; }
-    .info-left, .info-right { max-height: 65vh; }
-
+    #pokemon-image:hover {
+        transform: scale(1.03); /* Slightly less aggressive hover on smaller screens */
+    }
 }
 
 @media (max-width: 768px) {
@@ -424,40 +431,61 @@ body {
     .pokedex-container { height: auto; max-height: none; flex-direction: column; }
     .pokedex-header { flex-direction: column; gap: 10px; padding: 15px; }
     .pokemon-display-area {
-        min-height: 400px;
+        min-height: auto; /* Let content dictate height */
         padding: 15px;
     }
      #pokemon-info {
         grid-template-columns: 1fr; /* Stacked */
-        grid-template-rows: auto auto auto;
+        grid-template-rows: auto auto auto; /* Image first, then left, then right */
         gap: 20px;
         text-align: center;
         height: auto;
     }
+     /* --- UPDATED for Mobile Stack --- */
+     .info-center {
+        order: -1; /* Make image appear first */
+        height: auto;
+        padding: 10px 0; /* Reduce padding a bit */
+     }
+     .pokemon-image-wrapper {
+         /* Allow significant height but constrain width */
+         height: auto; /* Let content size it */
+         max-height: 45vh; /* Limit vertical space */
+         width: 70%; /* Control width more */
+         max-width: 300px; /* Absolute max width */
+         margin: 0 auto; /* Center */
+     }
+     #pokemon-image {
+          /* Ensure it fits within the constrained wrapper */
+          max-height: 100%; /* Fill wrapper height */
+          max-width: 100%; /* Fill wrapper width */
+          object-fit: contain;
+     }
+
     .info-left, .info-right {
         height: auto;
-        max-height: none;
+        max-height: none; /* Remove max-height limits */
         text-align: center;
-        overflow-y: visible;
+        overflow-y: visible; /* Disable scroll */
         padding-right: 0;
     }
-    .info-center {
-        order: -1;
-        height: auto;
-        padding: 20px 0;
-    }
     #pokemon-name { font-size: 1.8em; }
-     .pokemon-image-wrapper {
-         height: auto;
-         max-height: 40vh;
-         width: 60%;
-         max-width: 280px;
-         margin: 0 auto 15px auto;
-     }
+
     #pokemon-types { justify-content: center; }
-    #pokemon-description { max-height: 100px; font-size: 0.9em; text-align: center;}
-    .info-right h3 { margin-top: 10px; }
-    .stats-grid { grid-template-columns: auto 1fr auto; gap: 6px 8px; max-width: 350px; margin: 0 auto; padding-right: 0; }
+    #pokemon-description {
+        max-height: none; /* Allow full description */
+        font-size: 0.9em;
+        text-align: center;
+        margin-top: 15px; /* Add space */
+    }
+    .info-right h3 { margin-top: 20px; /* More space before stats */ }
+    .stats-grid {
+        grid-template-columns: auto 1fr auto;
+        gap: 6px 8px;
+        max-width: 350px;
+        margin: 0 auto;
+        padding-right: 0;
+     }
     .stat-name { text-align: right;}
 
     .pokemon-carousel-container { padding: 10px 0; }
@@ -468,27 +496,23 @@ body {
 @media (max-width: 480px) {
     .pokedex-header h1 { font-size: 1.3em; }
     #generation-select, .filter-container label { font-size: 0.8em; }
-    .pokemon-display-area { min-height: 350px; }
-     #pokemon-info {
-         gap: 15px;
-     }
-     .info-center {
-         padding: 15px 0;
-     }
+
+     #pokemon-info { gap: 15px; }
+     .info-center { padding: 5px 0; }
     #pokemon-name { font-size: 1.5em; }
-    .pokemon-image-wrapper {
-         max-height: 35vh;
-         width: 70%;
-         max-width: 220px;
+
+     .pokemon-image-wrapper {
+         max-height: 40vh; /* Adjust for smaller screens */
+         width: 80%;
+         max-width: 240px;
     }
     .type-badge { font-size: 0.75em; padding: 4px 10px; }
     #pokemon-id { font-size: 1em; margin-bottom: 10px;}
     #pokemon-description { font-size: 0.85em; }
-    .info-right h3 { font-size: 1em; }
-    .stats-grid { gap: 5px 5px; max-width: 90%; }
+    .info-right h3 { font-size: 1em; margin-top: 15px; }
+    .stats-grid { gap: 5px 5px; max-width: 95%; } /* Wider on small screens */
     .stat-name, .stat-value { font-size: 0.8em;}
-    .stat-value {
-        min-width: 25px;
-    }
+    .stat-value { min-width: 25px; }
+
     .carousel-item { width: 65px; height: 65px; }
 }
