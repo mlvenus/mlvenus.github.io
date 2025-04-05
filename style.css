@@ -225,45 +225,49 @@ body {
     padding-right: 5px; /* Minor spacing */
 }
 
-/* --- UPDATED --- Coluna Central (Imagem) */
+/* Coluna Central (Imagem) */
 .info-center {
     display: flex; /* Use flex to easily center content */
     align-items: center; /* Vertically center wrapper */
     justify-content: center; /* Horizontally center wrapper */
     height: 100%; /* Fill the stretched grid cell height */
     overflow: hidden; /* Prevent image overflow if somehow aspect ratio forces it */
+    /* background-color: rgba(255, 0, 0, 0.1); /* DEBUG: See cell bounds */
 }
 
-/* --- UPDATED --- Wrapper to allow image to grow */
+/* Wrapper still useful for centering */
 .pokemon-image-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%; /* Take full width of the column */
-    height: 100%; /* *** CHANGED: Take full height of the column *** */
-    /* Removed max-height: 75vh; let it fill the cell */
-    position: relative; /* Needed if you add pseudo-elements later */
+    width: 100%;
+    height: 100%;
+    position: relative;
+    /* background-color: rgba(0, 255, 0, 0.1); /* DEBUG: See wrapper bounds */
 }
 
 /* --- UPDATED --- Image styles */
 #pokemon-image {
     display: block;
-    /* Make image fill the wrapper while maintaining aspect ratio */
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;  /* Let height dictate width based on aspect ratio */
-    height: auto; /* Let width dictate height based on aspect ratio */
-    /* *** ADDED/EMPHASIZED: Use contain to fit entirely within the bounds *** */
-    object-fit: contain;
+    /* *** CHANGED: Force height to large percentage of container *** */
+    height: 90%; /* Try 90% of the wrapper height */
+    width: auto;  /* Let width adjust based on aspect ratio */
+
+    /* *** Keep safety limits and fitting *** */
+    max-width: 100%;  /* Prevent overflow if aspect ratio makes width too large */
+    max-height: 100%; /* Redundant due to height: 90%, but safe */
+    object-fit: contain; /* Scale down nicely if needed, maintain aspect ratio */
+
     /* Keep pixelated rendering for sprites */
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
     filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
     transition: transform 0.4s ease;
+     /* background-color: rgba(0, 0, 255, 0.1); /* DEBUG: See image bounds */
 }
 #pokemon-image:hover {
-    transform: scale(1.05); /* Slight scale on hover, adjust if needed */
+    transform: scale(1.05); /* Keep hover effect */
 }
 
 
@@ -421,6 +425,9 @@ body {
     .info-left, .info-right {
          max-height: calc(90vh - 130px); /* Adjust based on new header/footer size */
     }
+    #pokemon-image {
+         height: 85%; /* Slightly smaller percentage on medium screens */
+    }
     #pokemon-image:hover {
         transform: scale(1.03); /* Slightly less aggressive hover on smaller screens */
     }
@@ -448,18 +455,20 @@ body {
         padding: 10px 0; /* Reduce padding a bit */
      }
      .pokemon-image-wrapper {
-         /* Allow significant height but constrain width */
          height: auto; /* Let content size it */
-         max-height: 45vh; /* Limit vertical space */
          width: 70%; /* Control width more */
          max-width: 300px; /* Absolute max width */
          margin: 0 auto; /* Center */
+         /* Remove explicit max-height here, let #pokemon-image control */
      }
      #pokemon-image {
-          /* Ensure it fits within the constrained wrapper */
-          max-height: 100%; /* Fill wrapper height */
-          max-width: 100%; /* Fill wrapper width */
+          /* Control size directly in mobile */
+          height: auto; /* Let width dictate height */
+          width: 70%; /* Example width */
+          max-width: 280px; /* Max pixel width */
+          max-height: 45vh; /* Max viewport height */
           object-fit: contain;
+          margin: 0 auto; /* Center if needed */
      }
 
     .info-left, .info-right {
@@ -502,10 +511,15 @@ body {
     #pokemon-name { font-size: 1.5em; }
 
      .pokemon-image-wrapper {
-         max-height: 40vh; /* Adjust for smaller screens */
          width: 80%;
          max-width: 240px;
     }
+     #pokemon-image {
+         /* Adjust for very small screens */
+         width: 80%;
+         max-width: 220px;
+         max-height: 40vh;
+     }
     .type-badge { font-size: 0.75em; padding: 4px 10px; }
     #pokemon-id { font-size: 1em; margin-bottom: 10px;}
     #pokemon-description { font-size: 0.85em; }
