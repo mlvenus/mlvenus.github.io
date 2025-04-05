@@ -3,62 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokédex Moderna - Todos os Pokémon</title>
+    <title>Pokédex Moderna X</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="background-animation"></div>
 
     <div class="pokedex-container">
-        <h1>Pokédex Moderna</h1>
 
-        <div class="pokedex">
-            <div class="pokemon-list-column">
-                <div class="search-container">
-                     <input type="search" id="search-input" placeholder="Procurar Pokémon...">
-                </div>
-                <div class="pokemon-list-container">
-                    <ul id="pokemon-list">
-                        <div id="list-loader" class="loader-container">
-                             <div class="loader"></div>
-                             <p>A carregar lista...</p>
-                        </div>
-                    </ul>
-                </div>
+        <header class="pokedex-header">
+            <h1>Pokédex Moderna X</h1>
+            <div class="filter-container">
+                <label for="generation-select">Filtrar por Geração:</label>
+                <select id="generation-select">
+                    <option value="all">Todas</option>
+                    </select>
+            </div>
+        </header>
+
+        <main class="pokemon-display-area">
+            <div id="display-loader" class="loader-container hidden">
+                <div class="loader"></div>
             </div>
 
-            <div class="pokemon-display-column">
-                <div class="pokemon-display">
-                    <div id="display-prompt" class="display-message">
-                        <p>Selecione um Pokémon da lista</p>
-                    </div>
-                     <div id="display-loader" class="loader-container hidden">
-                         <div class="loader"></div>
-                         <p>A carregar detalhes...</p>
+            <div id="display-prompt" class="display-message">
+                <p>Selecione um Pokémon abaixo</p>
+                <span class="arrow-down">↓</span>
+            </div>
+
+             <div id="display-error" class="display-message hidden">
+                 <p>Erro ao carregar dados.</p>
+            </div>
+
+
+            <div id="pokemon-info" class="hidden">
+                 <div class="info-left">
+                    <h2 id="pokemon-name">Nome</h2>
+                    <div id="pokemon-id">#000</div>
+                    <div id="pokemon-types">
+                        </div>
+                     <p id="pokemon-description">Descrição do Pokémon aqui...</p>
+                 </div>
+                 <div class="info-center">
+                     <div class="pokemon-image-wrapper">
+                          <img id="pokemon-image" src="" alt="Pokémon Sprite">
                      </div>
-
-                    <div id="pokemon-info" class="hidden">
-                        <h2 id="pokemon-name">Nome do Pokémon</h2>
-                        <div class="pokemon-image-container">
-                            <img id="pokemon-image" src="" alt="Imagem do Pokémon">
+                 </div>
+                <div class="info-right">
+                    <h3>Base Stats</h3>
+                     <div id="pokemon-stats" class="stats-grid">
                         </div>
-                        <div id="pokemon-id">#000</div>
-                        <div id="pokemon-types">
-                            </div>
-                        <div id="pokemon-stats">
-                            <h3>Stats Base:</h3>
-                            <div class="stats-grid">
-                                </div>
-                        </div>
-                    </div>
-                     <div id="display-error" class="display-message hidden">
-                        <p>Não foi possível carregar os detalhes.</p>
-                    </div>
                 </div>
             </div>
-        </div>
+        </main>
+
+        <footer class="pokemon-carousel-container">
+             <div id="carousel-loader" class="loader-container">
+                 <div class="loader"></div>
+                 <p>Carregando Pokémon...</p>
+            </div>
+            <div id="pokemon-carousel">
+                </div>
+        </footer>
+
     </div>
 
     <script src="script.js"></script>
