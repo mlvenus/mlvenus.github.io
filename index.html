@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokédex Suprema X</title> {/* Updated Title */}
+    <title>Pokédex Moderna X</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    {/* Simple CSS Icon font (like Font Awesome) might be useful - Add if desired */}
-    {/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> */}
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> {/* Make sure this points to your updated CSS file */}
 </head>
 <body>
     <div class="background-animation"></div>
@@ -17,43 +15,21 @@
     <div class="pokedex-container">
 
         <header class="pokedex-header">
-            <h1>Pokédex Suprema X</h1> {/* Updated Title */}
-            {/* Filters and Search Area */}
-            <div class="controls-area">
-                 <div class="search-container">
-                     <label for="search-input">Pesquisar:</label>
-                     <input type="search" id="search-input" placeholder="Nome ou ID...">
-                 </div>
-                 <div class="filter-container">
-                    <label for="type-filter">Tipo:</label>
-                    <select id="type-filter">
-                        <option value="all">Todos</option>
-                        {/* Types added by JS */}
-                    </select>
-                </div>
-                <div class="filter-container">
-                    <label for="generation-select">Geração:</label>
-                    <select id="generation-select">
-                        <option value="all">Todas</option>
-                        {/* Generations added by JS */}
-                    </select>
-                </div>
-                 <div class="filter-container">
-                    <label for="favorite-filter">Ver:</label>
-                    <select id="favorite-filter">
-                        <option value="all">Todos</option>
-                        <option value="favorites">Favoritos</option>
-                        {/* Add "Caught" logic if implemented separately */}
-                    </select>
-                </div>
+            <h1>Pokédex Moderna X</h1>
+            <div class="filter-container">
+                <label for="generation-select">Filtrar por Geração:</label>
+                <select id="generation-select">
+                    <option value="all">Todas</option>
+                    {/* Options will be populated by JS */}
+                </select>
             </div>
         </header>
 
-        <main id="pokemon-display-area-main" class="pokemon-display-area"> {/* Added ID for type background */}
+        <main class="pokemon-display-area">
             {/* Loader for central display */}
             <div id="display-loader" class="loader-container hidden">
                 <div class="loader"></div>
-                 <p>Carregando...</p>
+                 <p>Carregando...</p> {/* Added text to display loader */}
             </div>
 
             {/* Prompt message */}
@@ -65,74 +41,33 @@
              {/* Error message */}
              <div id="display-error" class="display-message hidden">
                  <p>Erro ao carregar dados.</p>
-                 <p id="error-details"></p> {/* For specific error messages */}
+                 <p>Tente recarregar a página.</p> {/* Added suggestion */}
             </div>
 
-            {/* Main Pokemon Info Display Grid - Structure potentially adjusted */}
+            {/* Main Pokemon Info Display Grid */}
             <div id="pokemon-info" class="hidden">
-                 {/* --- Column 1: Core Info & Actions --- */}
-                 <div class="info-col info-left">
-                    {/* Name, ID, Cry, Favorite */}
-                    <div class="name-section">
-                        <h2 id="pokemon-name">Nome</h2>
-                        <div class="sub-name-section">
-                            <span id="pokemon-id">#0000</span>
-                             <button id="cry-button" class="icon-button" aria-label="Ouvir Grito">🔊</button> {/* Placeholder Icon */}
-                             <button id="favorite-button" class="icon-button" aria-label="Marcar como Favorito">☆</button> {/* Placeholder Icon */}
-                        </div>
-                    </div>
-                    {/* Types */}
-                    <div id="pokemon-types" class="types-section">
+                 {/* Left Column: Name, ID, Types, Description */}
+                 <div class="info-left">
+                    <h2 id="pokemon-name">Nome</h2>
+                    <div id="pokemon-id">#000</div>
+                    <div id="pokemon-types">
                         {/* Type badges added by JS */}
                     </div>
-                    {/* Height & Weight */}
-                    <div id="pokemon-size" class="size-section">
-                        <div><span class="label">Height:</span> <span id="pokemon-height">?</span></div>
-                        <div><span class="label">Weight:</span> <span id="pokemon-weight">?</span></div>
-                    </div>
-                    {/* Description */}
-                     <p id="pokemon-description" class="description-section">Descrição do Pokémon aqui...</p>
-                     {/* Abilities */}
-                     <div class="abilities-section">
-                         <h3>Abilities</h3>
-                         <ul id="pokemon-abilities"></ul>
-                     </div>
+                     <p id="pokemon-description">Descrição do Pokémon aqui...</p>
                  </div>
 
-                 {/* --- Column 2: Image & Sprites --- */}
-                 <div class="info-col info-center">
+                 {/* Center Column: Image */}
+                 <div class="info-center">
                      <div class="pokemon-image-wrapper">
                           <img id="pokemon-image" src="" alt="Pokémon Sprite">
                      </div>
-                     <div class="sprite-toggles">
-                        <button id="sprite-default-button" class="sprite-button active" data-sprite-type="default">Normal</button>
-                        <button id="sprite-shiny-button" class="sprite-button" data-sprite-type="shiny">Shiny</button>
-                        {/* Add buttons for other forms if data available */}
-                    </div>
                  </div>
 
-                 {/* --- Column 3: Stats & Relations --- */}
-                <div class="info-col info-right">
-                     {/* Base Stats */}
-                    <div class="stats-section">
-                        <h3>Base Stats</h3>
-                         <div id="pokemon-stats" class="stats-grid">
-                            {/* Stats grid items added by JS */}
-                         </div>
-                    </div>
-                     {/* Type Effectiveness */}
-                     <div class="effectiveness-section">
-                         <h3>Type Matchups</h3>
-                         <div id="type-effectiveness">
-                             {/* Effectiveness details added by JS */}
-                         </div>
-                     </div>
-                     {/* Evolution Chain */}
-                     <div class="evolution-section">
-                         <h3>Evolution Chain</h3>
-                         <div id="pokemon-evolution">
-                             {/* Evolution chain added by JS */}
-                         </div>
+                 {/* Right Column: Stats */}
+                <div class="info-right">
+                    <h3>Base Stats</h3>
+                     <div id="pokemon-stats" class="stats-grid">
+                        {/* Stats grid items added by JS */}
                      </div>
                 </div>
             </div>
@@ -150,9 +85,7 @@
         </footer>
 
     </div>
-    {/* Audio Element for Cries (hidden) */}
-    <audio id="pokemon-cry-audio" style="display: none;"></audio>
 
-    <script src="script.js"></script>
+    <script src="script.js"></script> {/* Make sure this points to your JS file */}
 </body>
 </html>
